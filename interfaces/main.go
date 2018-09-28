@@ -1,6 +1,10 @@
 package main
 
-import "github.com/contreras117/gocurso/interfaces/interpck"
+import (
+	"fmt"
+
+	"github.com/contreras117/gocurso/interfaces/interpck"
+)
 
 func main() {
 
@@ -8,6 +12,10 @@ func main() {
 }
 
 func testSuscribe() {
+
+	//La palabra reservada defer permite ejecutar una funcion al terminar la ejecucion del funcion detro de la que se encuentra.
+	//Puede ir en cualquier lugar dentro de la funcion, ya se al inicio, en el medio, al final, etc.
+	defer deferTest()
 	curso := interfaces.Course{Name: "Progrmacion con go", Slug: "go", Skills: []string{"Backend", "Servidores", "Programacion"}}
 	curso2 := interfaces.Course{Name: "Bases de datos", Slug: "BDD", Skills: []string{"Backend", "Servidores"}}
 
@@ -21,4 +29,8 @@ func testSuscribe() {
 
 func callSuscribe(p interfaces.Platzi) {
 	p.Suscribe("Daniel")
+}
+
+func deferTest() {
+	fmt.Println("La funcion testSuscribe ha terminado")
 }
