@@ -19,12 +19,15 @@ func main() {
 	fmt.Println(<-ch1)
 
 	//channel simple que usa datos de tipo int. En este caso se le metieron multiples valores y para ir tomandolos se itero dentro
-	//del channel con for y range, esta ultima es similar a foreach en Java.
+	//del channel con for y range. Usando la palabra range se tomaran los valores del channel hasta que se reciba la senal de que el channel ya esta cerrado.
 	ch2 := make(chan int)
 	go func() {
 		defer close(ch2)
 		for i := 1; i < 11; i++ {
+			//Cuando se envia un dato al channel, el hilo que lo envia queda bloqueado hasta que el valor sea sacado del channel. En este caso el valor es tomado en el hilo main, dentro del for range (linea 33)
+			//Lo anterior aplica mientras el bufer no este lleno (si no se declara un buffer, este tiene capacidad de 0)
 			ch2 <- i
+			fmt.Println("Se metio un dato al channel ch2")
 		}
 	}()
 	for n := range ch2 {
@@ -44,18 +47,35 @@ func main() {
 	fmt.Printf("El valor %d fue tomado del channel con buffer ch3\n", <-ch3)
 
 	ch4 := make(chan int, 3)
-	f3 := func(ch *chan int) {
-		defer close(*ch)
-		*ch <- 3
-		*ch <- 18
-		*ch <- 44
-		*ch <- 55
-		*ch <- 74
+	f3 := func(ch chan int) {
+		defer close(ch)
+		ch <- 3
+		ch <- 18
+		ch <- 44
+		ch <- 55
+		ch <- 74
 	}
 
-	go f3(&ch4)
-
+	go f3(ch4)
 	for n := range ch4 {
 		fmt.Println(n)
 	}
+
+	s := []int{7, 2, 8, -9, 4, 0}
+
+	c := make(chan int)
+	fmt.Println(s[:len(s)/2], s[len(s)/2:])
+	go sum(s[:len(s)/2], c)
+	go sum(s[len(s)/2:], c)
+	x, y := <-c, <-c // receive from c
+
+	fmt.Println(x, y, x+y)
+}
+
+func sum(s []int, c chan int) {
+	sum := 0
+	for _, v := range s {
+		sum += v
+	}
+	c <- sum // send sum to c
 }
