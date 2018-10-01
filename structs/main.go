@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	. "github.com/contreras117/gocurso/structs/course"
+	. "github.com/contreras117/curso_go/structs/course"
 )
 
 //MiDato - Con la palabra reservada type podemos crear nuevos tipos de datos a partir de otros.
