@@ -1,0 +1,13 @@
+Los erroes mas comunes al trabajar con go son:
+
+Confundir el = con el :=. 
+= es usado para asignar un nuevo valor a una variable ya creada
+:= es para crear una nueva variable sin indicar explicitamente su tipo y asignarle un valor de inicio.
+
+Configurar correctamente el GOPATH
+
+
+Olvidar usar new cuando se inicializa una struct y make cuando se inicializa un map.
+
+
+Olvidar crear correctamente los directorios del workspace cuando se trabaja con repositorios.
