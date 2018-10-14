@@ -6,6 +6,12 @@ import (
 	"fmt"
 )
 
+//Un canal puede ser bidireccional o de un solo sentido, dependiende de la manera en
+// en que se inicializa:
+// chan tipoDato       Es un canal bidireccional
+// chan<- tipoDato     Solo puede utilizar para enviar datos
+// <-chan tipoDato     Solo puede utilizar para recibir datos
+
 func main() {
 	//channel simple que usa datos de tipo string.
 	ch1 := make(chan string)
